@@ -1,6 +1,10 @@
 # aradu-FeelsBook
 FeelsBook 301 Assignment
 
+This program implements a mood tracker, with which users can
+
+add, delete, and edit moods
+
 Sources of Help:
   - StackOverflow
   - [lonelyTwitter](https://github.com/joshua2ua/lonelyTwitter)
