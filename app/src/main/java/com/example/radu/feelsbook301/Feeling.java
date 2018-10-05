@@ -47,7 +47,7 @@ public class Feeling {
     // Used to compare two feelings based on dates
     // reference: https://stackoverflow.com/questions/8424526/compare-object-by-dates-implements-comparator
 
-    public static Comparator<Feeling> RecDateComparator = new Comparator<Feeling>() {
+    public static Comparator<Feeling> feelingComparator = new Comparator<Feeling>() {
 
         public int compare(Feeling feeling1, Feeling feeling2) {
             String Date1 = feeling1.getDate();

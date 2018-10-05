@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Gson gson = new Gson();
             Type listRecordType = new TypeToken<ArrayList<Feeling>>(){}.getType();
             feelings = gson.fromJson(reader,listRecordType);
-            Collections.sort(feelings,Feeling.RecDateComparator);
+            Collections.sort(feelings,Feeling.feelingComparator);
 
         }
         catch (FileNotFoundException e) {

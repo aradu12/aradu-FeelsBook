@@ -151,7 +151,7 @@ public class EditFeelingActivity extends AppCompatActivity {
 
             editFeeling.setDate(editDate);
             editFeeling.setComment(editComment);
-            Collections.sort(feelings,Feeling.RecDateComparator);
+            Collections.sort(feelings,Feeling.feelingComparator);
             saveInFile();
             Toast.makeText(this, "Feeling Saved", Toast.LENGTH_SHORT).show();
 	    
