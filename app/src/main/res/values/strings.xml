@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">aradu-FeelsBook</string>
+
+    <string name="max_len">Maximum 100 characters</string>
+    <string name="comment">  What are you feeling? </string>
+    <string name="history">FeelsBook - History</string>
+    <string name="love">Love</string>
+    <string name="joy">Joy</string>
+    <string name="anger">Anger</string>
+    <string name="fear">Fear</string>
+    <string name="surprise">Surprise</string>
+    <string name="sadness">Sadness</string>
+    <string name="stats">View Stats</string>
+    <string name="back">Back</string>
+</resources>

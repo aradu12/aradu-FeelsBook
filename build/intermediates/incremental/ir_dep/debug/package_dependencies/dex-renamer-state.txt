@@ -1,0 +1,4 @@
+#Fri Oct 05 16:40:55 MDT 2018
+base.0=/Users/radu/AndroidStudioProjects/FeelsBook301/app/build/intermediates/transforms/dexMerger/debug/10
+path.0=classes.dex
+renamed.0=classes.dex
