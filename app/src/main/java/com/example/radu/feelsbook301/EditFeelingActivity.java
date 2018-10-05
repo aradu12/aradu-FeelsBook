@@ -61,19 +61,19 @@ public class EditFeelingActivity extends AppCompatActivity {
         feelComment.setText(COMMENT);
         
         // get date using positions in DATE
-        int Year_origin = Integer.valueOf(DATE.substring(0,4));
-        int Month_origin = Integer.valueOf(DATE.substring(5,7))-1;
-        int Day_origin = Integer.valueOf(DATE.substring(8,10));
-        int Hour_origin = Integer.valueOf(DATE.substring(11,13));
-        int Min_origin = Integer.valueOf(DATE.substring(14,16));
+        int dateYear = Integer.valueOf(DATE.substring(0,4));
+        int dateMonth = Integer.valueOf(DATE.substring(5,7))-1;
+        int dateDay = Integer.valueOf(DATE.substring(8,10));
+        int dateHour = Integer.valueOf(DATE.substring(11,13));
+        int dateMin = Integer.valueOf(DATE.substring(14,16));
 
         // configure time picker to current time and date
-        DatePicker Date_origin = findViewById(R.id.date_hint);
-        Date_origin.updateDate(Year_origin,Month_origin,Day_origin);
+        DatePicker displayDate = findViewById(R.id.date_hint);
+        displayDate.updateDate(dateYear, dateMonth, dateDay);
         TimePicker time = findViewById(R.id.time_hint);
         time.setIs24HourView(true);
-        time.setCurrentHour(Hour_origin);
-        time.setCurrentMinute(Min_origin);
+        time.setCurrentHour(dateHour);
+        time.setCurrentMinute(dateMin);
 
     }
 
@@ -95,22 +95,24 @@ public class EditFeelingActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        // delete emotion from records
+        // delete emotion from list
         if (id == R.id.delete_button) {
-            deleteEmotion(view);
+            deleteEntry(view);
         }
 
-        Date selectedDate = new Date(date.getYear()-1900, date.getMonth(), date.getDayOfMonth(),time.getHour(),time.getMinute());
+        Date newDate = new Date(date.getYear()-1900, date.getMonth(), date.getDayOfMonth(),time.getHour(),time.getMinute());
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         
         // edit an emotion
-        String editDate = dateFormatter.format(selectedDate);
+        String editDate = dateFormatter.format(newDate);
         EditText comment = findViewById(R.id.feel_comment);
         
         // change feeling type
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rad_group);
         String editMood = null;
         int checkedMood = radioGroup.getCheckedRadioButtonId();
+        
+	// find out which feeling the user wants to change to
         switch (checkedMood) {
             case R.id.love:
                 editMood = "Love";
@@ -152,22 +154,23 @@ public class EditFeelingActivity extends AppCompatActivity {
             Collections.sort(feelings,Feeling.RecDateComparator);
             saveInFile();
             Toast.makeText(this, "Feeling Saved", Toast.LENGTH_SHORT).show();
-
+	    
+            // return home
             startActivity(new Intent(EditFeelingActivity.this,MainActivity.class));
         }
 
 
     }
 
-    // load from file
+    // load data from file
     private ArrayList<Feeling> loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader reader = new BufferedReader(isr);
             Gson gson = new Gson();
-            Type listRecordType = new TypeToken<ArrayList<Feeling>>(){}.getType();
-            feelings = gson.fromJson(reader,listRecordType);
+            Type listfeelingsType = new TypeToken<ArrayList<Feeling>>(){}.getType();
+            feelings = gson.fromJson(reader,listfeelingsType);
             return feelings;
 
         }
@@ -182,7 +185,7 @@ public class EditFeelingActivity extends AppCompatActivity {
         return null;
     }
 
-    // save to file
+    // save new data to file
     private void saveInFile(){
         try {
             FileOutputStream fos = openFileOutput(FILENAME,0);
@@ -203,13 +206,17 @@ public class EditFeelingActivity extends AppCompatActivity {
     }
 
     // delete one emotion
-    public void deleteEmotion(View view) {
+    public void deleteEntry(View view) {
         Bundle bundle = this.getIntent().getExtras();
         int index = bundle.getInt("index");
         feelings = loadFromFile();
+
+        // get the feeling to delete
         Feeling toEdit = feelings.get(index);
         feelings.remove(toEdit);
         saveInFile();
+
+        // notify user of delete
         Toast.makeText(this, toEdit.getFeeling()+" Deleted", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(EditFeelingActivity.this,MainActivity.class));
 
