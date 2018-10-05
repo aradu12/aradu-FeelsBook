@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader reader = new BufferedReader(isr);
             Gson gson = new Gson();
-            Type listRecordType = new TypeToken<ArrayList<Feeling>>(){}.getType();
-            feelings = gson.fromJson(reader,listRecordType);
+            Type feelingListType = new TypeToken<ArrayList<Feeling>>(){}.getType();
+            feelings = gson.fromJson(reader,feelingListType);
             Collections.sort(feelings,Feeling.feelingComparator);
 
         }
